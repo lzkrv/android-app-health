@@ -15,12 +15,12 @@ import android.view.animation.AnimationUtils;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BaseFragment1.OnFragmentInteractionListener} interface
+ * {@link ActivitiesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link BaseFragment1#newInstance} factory method to
+ * Use the {@link ActivitiesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BaseFragment1 extends Fragment {
+public class ActivitiesFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,10 +34,10 @@ public class BaseFragment1 extends Fragment {
 
 
     private Boolean isFabOpen = false;
-    private FloatingActionButton fab,fab1,fab2;
+    private FloatingActionButton fabAdd,fab1,fab2;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
-    public BaseFragment1() {
+    public ActivitiesFragment() {
         // Required empty public constructor
     }
 
@@ -47,11 +47,11 @@ public class BaseFragment1 extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BaseFragment1.
+     * @return A new instance of fragment ActivitiesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BaseFragment1 newInstance(String param1, String param2) {
-        BaseFragment1 fragment = new BaseFragment1();
+    public static ActivitiesFragment newInstance(String param1, String param2) {
+        ActivitiesFragment fragment = new ActivitiesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -79,8 +79,8 @@ public class BaseFragment1 extends Fragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fabAdd = (FloatingActionButton) view.findViewById(R.id.fab_add);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 animateFAB();
@@ -155,7 +155,7 @@ public class BaseFragment1 extends Fragment {
 
         if(isFabOpen){
 
-            fab.startAnimation(rotate_backward);
+            fabAdd.startAnimation(rotate_backward);
             fab1.startAnimation(fab_close);
             fab2.startAnimation(fab_close);
             fab1.setClickable(false);
@@ -164,7 +164,7 @@ public class BaseFragment1 extends Fragment {
 
         } else {
 
-            fab.startAnimation(rotate_forward);
+            fabAdd.startAnimation(rotate_forward);
             fab1.startAnimation(fab_open);
             fab2.startAnimation(fab_open);
             fab1.setClickable(true);
