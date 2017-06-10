@@ -1,10 +1,16 @@
 package com.healthtracking;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,20 +27,11 @@ import android.view.animation.AnimationUtils;
  * create an instance of this fragment.
  */
 public class ActivitiesFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    //???
     private OnFragmentInteractionListener mListener;
 
-
     private Boolean isFabOpen = false;
-    private FloatingActionButton fabAdd,fab1,fab2;
+    private FloatingActionButton fabAdd,fabFood,fabSport, fabHealth, fabMood;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
     public ActivitiesFragment() {
@@ -53,8 +50,8 @@ public class ActivitiesFragment extends Fragment {
     public static ActivitiesFragment newInstance(String param1, String param2) {
         ActivitiesFragment fragment = new ActivitiesFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,8 +60,8 @@ public class ActivitiesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
 
@@ -73,10 +70,7 @@ public class ActivitiesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_base_fragment1, container, false);
-
         super.onCreateView(inflater, container, savedInstanceState);
 
         fabAdd = (FloatingActionButton) view.findViewById(R.id.fab_add);
@@ -87,21 +81,16 @@ public class ActivitiesFragment extends Fragment {
             }
         });
 
-        fab1 = (FloatingActionButton) view.findViewById(R.id.fab1);
-        fab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO
-            }
-        });
+        fabFood = getFloatingButton(getContext(), ActionType.FOOD);
+        fabSport = getFloatingButton(getContext(), ActionType.SPORT);
+        fabMood = getFloatingButton(getContext(), ActionType.MOOD);
+        fabHealth = getFloatingButton(getContext(), ActionType.HEALTH);
 
-        fab2 = (FloatingActionButton) view.findViewById(R.id.fab2);
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO
-            }
-        });
+        CoordinatorLayout cl = (CoordinatorLayout) view.findViewById(R.id.fragment1);
+        cl.addView(fabFood);
+        cl.addView(fabSport);
+        cl.addView(fabMood);
+        cl.addView(fabHealth);
 
         fab_open = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.fab_close);
@@ -109,6 +98,44 @@ public class ActivitiesFragment extends Fragment {
         rotate_backward = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.rotate_backward);
 
         return view;
+    }
+
+    private FloatingActionButton getFloatingButton(Context context, ActionType actionType) {
+        FloatingActionButton fab = new FloatingActionButton(context);
+
+        CoordinatorLayout.LayoutParams layoutParams = new CoordinatorLayout.LayoutParams(
+                CoordinatorLayout.LayoutParams.WRAP_CONTENT,
+                CoordinatorLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.BOTTOM | Gravity.END;
+
+        if(getActivity().getResources().getConfiguration().orientation ==
+                Configuration.ORIENTATION_PORTRAIT) {
+            layoutParams.bottomMargin = (int) getResources().getDimension(R.dimen.fabs_init_margin)
+                    + ((int) getResources().getDimension(R.dimen.fabs_next_margin)
+                        * actionType.ordinal());
+            layoutParams.rightMargin = (int) getResources().getDimension(R.dimen.fab_margin);
+        } else {
+            layoutParams.bottomMargin = (int) getResources().getDimension(R.dimen.fab_margin);
+            layoutParams.rightMargin = (int) getResources().getDimension(R.dimen.fabs_init_margin)
+                    + ((int) getResources().getDimension(R.dimen.fabs_next_margin)
+                    * actionType.ordinal());
+        }
+
+        fab.setLayoutParams(layoutParams);
+
+        fab.setCompatElevation(getResources().getDimension(R.dimen.fab_elevation));
+        fab.setTranslationZ(R.dimen.fab_pressedTranslationZ);
+        fab.setVisibility(View.INVISIBLE);
+        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(actionType.getColor())));
+        fab.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.p3_plus));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO
+            }
+        });
+
+        return fab;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -151,24 +178,39 @@ public class ActivitiesFragment extends Fragment {
     }
 
 
-    public void animateFAB(){
+    private void animateFAB(){
 
         if(isFabOpen){
 
             fabAdd.startAnimation(rotate_backward);
-            fab1.startAnimation(fab_close);
-            fab2.startAnimation(fab_close);
-            fab1.setClickable(false);
-            fab2.setClickable(false);
+
+            fabFood.startAnimation(fab_close);
+            fabSport.startAnimation(fab_close);
+            fabHealth.startAnimation(fab_close);
+            fabMood.startAnimation(fab_close);
+
+
+            fabFood.setClickable(false);
+            fabSport.setClickable(false);
+            fabHealth.setClickable(false);
+            fabMood.setClickable(false);
+
             isFabOpen = false;
 
         } else {
 
             fabAdd.startAnimation(rotate_forward);
-            fab1.startAnimation(fab_open);
-            fab2.startAnimation(fab_open);
-            fab1.setClickable(true);
-            fab2.setClickable(true);
+
+            fabFood.startAnimation(fab_open);
+            fabSport.startAnimation(fab_open);
+            fabHealth.startAnimation(fab_open);
+            fabMood.startAnimation(fab_open);
+
+            fabFood.setClickable(true);
+            fabSport.setClickable(true);
+            fabHealth.setClickable(true);
+            fabMood.setClickable(true);
+
             isFabOpen = true;
         }
     }
