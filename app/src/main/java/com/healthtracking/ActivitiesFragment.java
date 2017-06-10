@@ -31,7 +31,7 @@ public class ActivitiesFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private Boolean isFabOpen = false;
-    private FloatingActionButton fabAdd,fabFood,fabSport, fabHealth, fabMood;
+    private FloatingActionButton fabAdd,fabFood,fabSport, fabHealth, fabMood, fabHobby;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
     public ActivitiesFragment() {
@@ -85,12 +85,14 @@ public class ActivitiesFragment extends Fragment {
         fabSport = getFloatingButton(getContext(), ActionType.SPORT);
         fabMood = getFloatingButton(getContext(), ActionType.MOOD);
         fabHealth = getFloatingButton(getContext(), ActionType.HEALTH);
+        fabHobby = getFloatingButton(getContext(), ActionType.HOBBY);
 
         CoordinatorLayout cl = (CoordinatorLayout) view.findViewById(R.id.fragment1);
         cl.addView(fabFood);
         cl.addView(fabSport);
         cl.addView(fabMood);
         cl.addView(fabHealth);
+        cl.addView(fabHobby);
 
         fab_open = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.fab_close);
@@ -188,12 +190,13 @@ public class ActivitiesFragment extends Fragment {
             fabSport.startAnimation(fab_close);
             fabHealth.startAnimation(fab_close);
             fabMood.startAnimation(fab_close);
-
+            fabHobby.startAnimation(fab_close);
 
             fabFood.setClickable(false);
             fabSport.setClickable(false);
             fabHealth.setClickable(false);
             fabMood.setClickable(false);
+            fabHobby.setClickable(false);
 
             isFabOpen = false;
 
@@ -205,11 +208,13 @@ public class ActivitiesFragment extends Fragment {
             fabSport.startAnimation(fab_open);
             fabHealth.startAnimation(fab_open);
             fabMood.startAnimation(fab_open);
+            fabHobby.startAnimation(fab_open);
 
             fabFood.setClickable(true);
             fabSport.setClickable(true);
             fabHealth.setClickable(true);
             fabMood.setClickable(true);
+            fabHobby.setClickable(true);
 
             isFabOpen = true;
         }

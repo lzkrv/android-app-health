@@ -6,6 +6,7 @@ package com.healthtracking;
 
 public enum ActionType {
     FOOD ("#ffdc8c", ""),
+    HOBBY ("#9bd0ff", ""),
     SPORT ("#e0ff8c", ""),
     HEALTH ("#f785b3", ""),
     MOOD ("#da9bff", "");
