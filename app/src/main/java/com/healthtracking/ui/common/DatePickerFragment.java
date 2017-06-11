@@ -1,4 +1,4 @@
-package com.healthtracking;
+package com.healthtracking.ui.common;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 import android.widget.TextView;
+
+import com.healthtracking.R;
 
 import java.util.Calendar;
 

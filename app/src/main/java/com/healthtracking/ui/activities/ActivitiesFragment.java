@@ -1,4 +1,4 @@
-package com.healthtracking;
+package com.healthtracking.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.healthtracking.R;
 import com.healthtracking.data.ActionType;
 
 

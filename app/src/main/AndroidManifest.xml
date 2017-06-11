@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -18,11 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddFoodActivity" android:label="Add Food" />
-        <activity android:name=".AddHealthActivity" android:label="Add Health Point"/>
-        <activity android:name=".AddHobbyActivity" android:label="Add Hobby Activity" />
-        <activity android:name=".AddMoodActivity" android:label="Add Mood Point" />
-        <activity android:name=".AddSportActivity" android:label="Add Sport Activity" />
+        <activity android:name=".ui.activities.AddFoodActivity" android:label="Add Food" />
+        <activity android:name=".ui.activities.AddHealthActivity" android:label="Add Health Point"/>
+        <activity android:name=".ui.activities.AddHobbyActivity" android:label="Add Hobby Activity" />
+        <activity android:name=".ui.activities.AddMoodActivity" android:label="Add Mood Point" />
+        <activity android:name=".ui.activities.AddSportActivity" android:label="Add Sport Activity" />
     </application>
 
 </manifest>
