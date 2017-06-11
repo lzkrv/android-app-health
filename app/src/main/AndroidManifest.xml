@@ -14,9 +14,15 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddFoodActivity" android:label="Add Food" />
+        <activity android:name=".AddHealthActivity" android:label="Add Health Point"/>
+        <activity android:name=".AddHobbyActivity" android:label="Add Hobby Activity" />
+        <activity android:name=".AddMoodActivity" android:label="Add Mood Point" />
+        <activity android:name=".AddSportActivity" android:label="Add Sport Activity" />
     </application>
 
 </manifest>

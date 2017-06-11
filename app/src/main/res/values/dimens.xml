@@ -2,9 +2,21 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="empty_margin">0dp</dimen>
+    <dimen name="standard_padding">16dp</dimen>
+    <dimen name="separator_line_height">1dp</dimen>
+
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="fab_pressedTranslationZ">12dp</dimen>
     <dimen name="fabs_init_margin">90dp</dimen>
     <dimen name="fabs_next_margin">70dp</dimen>
+
+    <dimen name="health_level_icon_size">64dp</dimen>
+    <dimen name="date_calendar_icon_size">32dp</dimen>
+
+    <dimen name="margin_between_sections">30dp</dimen>
+    <dimen name="margin_between_elements">10dp</dimen>
+
+    <dimen name="section_text_size">20sp</dimen>
 </resources>
