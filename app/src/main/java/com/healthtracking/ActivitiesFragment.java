@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.healthtracking.data.ActionType;
+
 
 /**
  * A simple {@link Fragment} subclass.

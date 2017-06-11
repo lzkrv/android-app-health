@@ -1,4 +1,11 @@
-package com.healthtracking;
+package com.healthtracking.data;
+
+import com.healthtracking.AddFoodActivity;
+import com.healthtracking.AddHealthActivity;
+import com.healthtracking.AddHobbyActivity;
+import com.healthtracking.AddMoodActivity;
+import com.healthtracking.AddSportActivity;
+import com.healthtracking.R;
 
 /**
  * Created by larisa on 6/10/17.
