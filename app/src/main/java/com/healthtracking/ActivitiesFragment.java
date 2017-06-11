@@ -1,6 +1,7 @@
 package com.healthtracking;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -102,7 +103,7 @@ public class ActivitiesFragment extends Fragment {
         return view;
     }
 
-    private FloatingActionButton getFloatingButton(Context context, ActionType actionType) {
+    private FloatingActionButton getFloatingButton(Context context, final ActionType actionType) {
         FloatingActionButton fab = new FloatingActionButton(context);
 
         CoordinatorLayout.LayoutParams layoutParams = new CoordinatorLayout.LayoutParams(
@@ -129,11 +130,12 @@ public class ActivitiesFragment extends Fragment {
         fab.setTranslationZ(R.dimen.fab_pressedTranslationZ);
         fab.setVisibility(View.INVISIBLE);
         fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(actionType.getColor())));
-        fab.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.p3_plus));
+        fab.setImageDrawable(ContextCompat.getDrawable(context, actionType.getImage()));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
+                Intent intent = new Intent(getActivity(), actionType.getClass());
+                startActivity(intent);
             }
         });
 
