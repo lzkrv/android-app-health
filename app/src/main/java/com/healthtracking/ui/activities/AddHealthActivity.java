@@ -1,4 +1,4 @@
-package com.healthtracking;
+package com.healthtracking.ui.activities;
 
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
@@ -12,7 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.healthtracking.R;
 import com.healthtracking.data.HealthLevel;
+import com.healthtracking.ui.MainActivity;
+import com.healthtracking.ui.common.DatePickerFragment;
+import com.healthtracking.ui.common.TimePickerFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

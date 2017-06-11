@@ -1,4 +1,4 @@
-package com.healthtracking;
+package com.healthtracking.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,6 +8,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.healthtracking.ui.activities.ActivitiesFragment;
+import com.healthtracking.R;
+import com.healthtracking.ui.statistics.StatisticsFragment;
 
 import java.util.ArrayList;
 import java.util.List;

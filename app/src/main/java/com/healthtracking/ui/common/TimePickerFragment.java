@@ -1,4 +1,4 @@
-package com.healthtracking;
+package com.healthtracking.ui.common;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.healthtracking.R;
 
 import java.util.Calendar;
 
