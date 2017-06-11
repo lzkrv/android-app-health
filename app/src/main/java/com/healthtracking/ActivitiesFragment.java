@@ -134,7 +134,8 @@ public class ActivitiesFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), actionType.getClass());
+                animateFAB();
+                Intent intent = new Intent(getActivity(), actionType.getActivity());
                 startActivity(intent);
             }
         });
