@@ -18,10 +18,10 @@ import com.healthtracking.ui.MainActivity;
 import com.healthtracking.ui.common.DatePickerFragment;
 import com.healthtracking.ui.common.TimePickerFragment;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import static com.healthtracking.Utils.getCurrentDateAndTime;
 
 public class AddHealthActivity extends AppCompatActivity {
+    //TODO: store time as int, not as two Strings
 
     private LinearLayout healthLevelSelector;
 
@@ -54,6 +54,7 @@ public class AddHealthActivity extends AppCompatActivity {
     public void submitHealthPoint(View view) {
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void changeDate(View view) {
@@ -64,14 +65,6 @@ public class AddHealthActivity extends AppCompatActivity {
     public void changeTime(View view) {
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getSupportFragmentManager(), "timePicker");
-    }
-
-    private String[] getCurrentDateAndTime() {
-        SimpleDateFormat date = new SimpleDateFormat("MM/dd/YYYY");
-        SimpleDateFormat time = new SimpleDateFormat("hh:mm");
-        Calendar c = Calendar.getInstance();
-        String[] dateAndTime = {date.format(c.getTime()), time.format(c.getTime())};
-        return dateAndTime;
     }
 
     private void addHealthLevels(final LinearLayout layout) {
@@ -100,10 +93,10 @@ public class AddHealthActivity extends AppCompatActivity {
             ImageView imageView = (ImageView) healthLevelSelector.getChildAt(i);
             if (imageView.getId() == healthLevel.ordinal()) {
                 imageView.setBackgroundColor(
-                        ContextCompat.getColor(this, R.color.colorForSelectedHealthLevel));
+                        ContextCompat.getColor(this, R.color.colorForSelectedImage));
             } else {
                 imageView.setBackgroundColor(
-                        ContextCompat.getColor(this, R.color.colorForUnselectedHealthLevel));
+                        ContextCompat.getColor(this, R.color.normalBackgroundColor));
             }
         }
         if(healthLevel == HealthLevel.POOR || healthLevel == HealthLevel.UNHEALTHY) {

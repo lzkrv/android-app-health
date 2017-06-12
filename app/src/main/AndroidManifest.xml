@@ -18,11 +18,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.AddFoodActivity" android:label="Add Food" />
-        <activity android:name=".ui.activities.AddHealthActivity" android:label="Add Health Point"/>
-        <activity android:name=".ui.activities.AddHobbyActivity" android:label="Add Hobby Activity" />
-        <activity android:name=".ui.activities.AddMoodActivity" android:label="Add Mood Point" />
-        <activity android:name=".ui.activities.AddSportActivity" android:label="Add Sport Activity" />
+        <activity
+            android:name=".ui.activities.AddFoodActivity"
+            android:label="Add Food" />
+        <activity
+            android:name=".ui.activities.AddHealthActivity"
+            android:label="Add Health Point" />
+        <activity
+            android:name=".ui.activities.AddHobbyActivity"
+            android:label="Add Hobby Activity" />
+        <activity
+            android:name=".ui.activities.AddMoodActivity"
+            android:label="Add Mood Point" />
+        <activity
+            android:name=".ui.activities.AddSportActivity"
+            android:label="Add Sport Activity" />
+        <activity
+            android:name=".ui.activities.HobbiesListActivity"
+            android:label="My Hobbies" />
+        <activity
+            android:name=".ui.activities.AddNewHobbyActivity"
+            android:label="Add New Hobby" />
     </application>
 
 </manifest>
