@@ -60,21 +60,21 @@ public class AddMoodActivity extends AppCompatActivity {
 
     private void addMoodLevels(final LinearLayout layout) {
         for (final MoodLevel moodLevel : MoodLevel.values()) {
-            final ImageView healthLevelImage = new ImageView(this);
+            final ImageView moodLevelImage = new ImageView(this);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    (int) getResources().getDimension(R.dimen.health_level_icon_size),
-                    (int) getResources().getDimension(R.dimen.health_level_icon_size)
+                    (int) getResources().getDimension(R.dimen.mood_level_icon_size),
+                    (int) getResources().getDimension(R.dimen.mood_level_icon_size)
             );
-            healthLevelImage.setId(moodLevel.ordinal());
-            healthLevelImage.setLayoutParams(layoutParams);
-            healthLevelImage.setImageDrawable(ContextCompat.getDrawable(this, moodLevel.getImage()));
-            healthLevelImage.setOnClickListener(new View.OnClickListener() {
+            moodLevelImage.setId(moodLevel.ordinal());
+            moodLevelImage.setLayoutParams(layoutParams);
+            moodLevelImage.setImageDrawable(ContextCompat.getDrawable(this, moodLevel.getImage()));
+            moodLevelImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     selectMoodLevel(moodLevel);
                 }
             });
-            layout.addView(healthLevelImage);
+            layout.addView(moodLevelImage);
         }
     }
 
@@ -94,7 +94,7 @@ public class AddMoodActivity extends AppCompatActivity {
 
     private void updateMoodLevel() {
         moodLevelSelector = (LinearLayout)findViewById(R.id.mood_level_selector);
-        // TODO: allow user to select default health level in settings
+        // TODO: allow user to select default mood level in settings
         addMoodLevels(moodLevelSelector);
         selectMoodLevel(MoodLevel.GOOD);
     }

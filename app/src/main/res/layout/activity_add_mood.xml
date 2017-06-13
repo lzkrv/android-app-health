@@ -104,7 +104,7 @@
             android:id="@+id/add_mood_point_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Health Point"
+            android:text="Add Mood Point"
             android:onClick="submitMoodPoint"/>
     </LinearLayout>
 </ScrollView>
