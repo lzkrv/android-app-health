@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorForUnselectedHealthLevel">#ffffff</color>
-    <color name="colorForSelectedHealthLevel">#8cc3ff</color>
+    <color name="normalBackgroundColor">@android:color/transparent</color>
+    <color name="colorForSelectedImage">#8cc3ff</color>
+    <color name="alertBackgroundColor">#ffb5d6</color>
 </resources>

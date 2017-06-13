@@ -4,4 +4,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_hobbies_list">HobbiesListActivity</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="hobby_time">hobby_time</string>
+    <string name="hobby_length">hobby_length</string>
+
+    <string name="current_time">current_time</string>
+    <string name="selected_year">selected_year</string>
+    <string name="selected_month">selected_month</string>
+    <string name="selected_day">selected_day</string>
+    <string name="selected_hourOfDay">selected_hourOfDay</string>
+    <string name="selected_minute">selected_minute</string>
 </resources>

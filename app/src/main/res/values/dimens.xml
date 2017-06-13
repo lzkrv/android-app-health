@@ -12,11 +12,16 @@
     <dimen name="fabs_init_margin">90dp</dimen>
     <dimen name="fabs_next_margin">70dp</dimen>
 
+    <dimen name="image_in_text_size">18dp</dimen>
+    <dimen name="image_in_list_size">32dp</dimen>
     <dimen name="health_level_icon_size">64dp</dimen>
+    <dimen name="hobby_icon_size">64dp</dimen>
     <dimen name="date_calendar_icon_size">32dp</dimen>
 
     <dimen name="margin_between_sections">30dp</dimen>
     <dimen name="margin_between_elements">10dp</dimen>
 
     <dimen name="section_text_size">20sp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
