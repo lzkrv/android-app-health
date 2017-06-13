@@ -1,6 +1,8 @@
 package com.healthtracking.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.healthtracking.R;
 import com.healthtracking.data.HealthLevel;
@@ -18,42 +19,32 @@ import com.healthtracking.ui.MainActivity;
 import com.healthtracking.ui.common.DatePickerFragment;
 import com.healthtracking.ui.common.TimePickerFragment;
 
-import static com.healthtracking.Utils.getCurrentDateAndTime;
+import static com.healthtracking.Utils.initDateAndTimeFields;
 
 public class AddHealthActivity extends AppCompatActivity {
-    //TODO: store time as int, not as two Strings
-
     private LinearLayout healthLevelSelector;
+
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_health);
 
-        healthLevelSelector = (LinearLayout)findViewById(R.id.health_level_selector);
+        sharedPref = getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
 
-        // TODO: allow user to select default health level
-        addHealthLevels(healthLevelSelector);
-        selectHealthLevel(HealthLevel.GOOD);
-
-        // TODO: store categories in DB
-        // TODO: allow user to modify categories
-        String[] testContent = {"Nothing special", "Sport Injury", "Stomack problems", "...add more types"};
-        Spinner spinner = (Spinner) findViewById(R.id.bad_health_reason_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, testContent);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        String[] dateAndTime = getCurrentDateAndTime();
-        TextView datePlaceholder = (TextView) findViewById(R.id.date_placeholder);
-        datePlaceholder.setText(dateAndTime[0]);
-        TextView timePlaceholder = (TextView) findViewById(R.id.time_placeholder);
-        timePlaceholder.setText(dateAndTime[1]);
+        updateHealthLevel();
+        setSpinnerForBadHealthReasons();
+        initDateAndTimeFields(this);
     }
 
     public void submitHealthPoint(View view) {
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         startActivity(intent);
+        editor.remove(getString(R.string.current_time));
+        editor.commit();
         finish();
     }
 
@@ -124,5 +115,22 @@ public class AddHealthActivity extends AppCompatActivity {
         findViewById(R.id.bad_health_reason_spinner).setVisibility(visibility);
         findViewById(R.id.bad_health_reason_text).setLayoutParams(layoutParams);
         findViewById(R.id.bad_health_reason_text).setVisibility(visibility);
+    }
+
+    private void updateHealthLevel() {
+        healthLevelSelector = (LinearLayout)findViewById(R.id.health_level_selector);
+        // TODO: allow user to select default health level in settings
+        addHealthLevels(healthLevelSelector);
+        selectHealthLevel(HealthLevel.GOOD);
+    }
+
+    private void setSpinnerForBadHealthReasons() {
+        // TODO: store categories in DB
+        // TODO: allow user to modify categories
+        String[] testContent = {"Nothing special", "Sport Injury", "Stomack problems", "...add more types"};
+        Spinner spinner = (Spinner) findViewById(R.id.bad_health_reason_spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, testContent);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 }

@@ -3,6 +3,7 @@ package com.healthtracking.ui.common;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -17,7 +18,10 @@ import android.widget.TimePicker;
 import com.healthtracking.R;
 
 import java.util.Calendar;
+import java.util.Date;
 
+import static com.healthtracking.Utils.changeTimeinDate;
+import static com.healthtracking.Utils.getFormattedTime;
 
 
 public class TimePickerFragment extends DialogFragment
@@ -36,7 +40,18 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        Long oldTime = sharedPref.getLong(getString(R.string.current_time), 0);
+        Date newDate = new Date();
+        newDate.setTime(oldTime);
+        newDate = changeTimeinDate(newDate, hourOfDay, minute);
+
         TextView timePlaceholder = (TextView) getActivity().findViewById(R.id.time_placeholder);
-        timePlaceholder.setText(String.format("%s:%s", hourOfDay, minute));
+        timePlaceholder.setText(getFormattedTime(newDate));
+
+        editor.putLong(getString(R.string.current_time), newDate.getTime());
+        editor.commit();
     }
 }
