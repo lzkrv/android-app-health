@@ -90,12 +90,14 @@ public class AddHobbyActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),
                         "Can't find hobby with id " + selectedActivityId, Toast.LENGTH_LONG).show();
             } else {
-                ImageView selectedHobbyImg = (ImageView) findViewById(R.id.select_hobby_img);
+                ImageView selectHobbyImg = (ImageView) findViewById(R.id.select_hobby_img);
                 TextView selectedHobbyText = (TextView) findViewById(R.id.select_hobby_text);
-                selectedHobbyImg.setImageResource(hobby.getImageDrawableId());
-                selectedHobbyImg.setBackgroundColor(
+                selectHobbyImg.setImageResource(hobby.getImageDrawableId());
+                selectHobbyImg.setBackgroundColor(
                         ContextCompat.getColor(this, R.color.normalBackgroundColor)
                 );
+                ImageView selectedHobbyImg = (ImageView) findViewById(R.id.selected_hobby_img);
+                selectedHobbyImg.setImageResource(hobby.getImageDrawableId());
                 selectedHobbyText.setText(hobby.getName());
                 hobbySelected = true;
             }
