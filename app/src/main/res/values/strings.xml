@@ -10,6 +10,9 @@
     <string name="hobby_time">hobby_time</string>
     <string name="hobby_length">hobby_length</string>
 
+    <string name="sport_time">hobby_time</string>
+    <string name="sport_length">hobby_length</string>
+
     <string name="current_time">current_time</string>
     <string name="selected_year">selected_year</string>
     <string name="selected_month">selected_month</string>

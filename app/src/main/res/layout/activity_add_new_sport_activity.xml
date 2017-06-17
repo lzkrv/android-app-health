@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:focusableInTouchMode="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/standard_padding"
+    android:paddingRight="@dimen/standard_padding"
+    android:orientation="vertical" >
+
+    <!-- Sport Name -->
+    <EditText
+        android:id="@+id/new_sport_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:maxLength="60"
+        android:hint="Please provide name for your sport."
+        />
+
+    <!-- Sport Image -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/empty_margin"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/margin_between_sections" >
+
+        <LinearLayout
+            android:id="@+id/parent_for_all_sport_images"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- Submit sport -->
+    <Button
+        android:id="@+id/add_health_point_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Sport"
+        android:onClick="addNewSport"/>
+</LinearLayout>

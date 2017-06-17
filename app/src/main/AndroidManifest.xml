@@ -34,6 +34,12 @@
             android:name=".ui.activities.AddSportActivity"
             android:label="Add Sport Activity" />
         <activity
+            android:name=".ui.activities.AddNewSportActivity"
+            android:label="Add New Sport" />
+        <activity
+            android:name=".ui.activities.SportsListActivity"
+            android:label="My Sports" />
+        <activity
             android:name=".ui.activities.HobbiesListActivity"
             android:label="My Hobbies" />
         <activity
