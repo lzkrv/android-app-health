@@ -1,13 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_add_food"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.healthtracking.ui.activities.AddFoodActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
 
-</RelativeLayout>
+    <LinearLayout
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/standard_padding"
+        android:paddingRight="@dimen/standard_padding"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/margin_between_sections">
+
+        <!-- What kind of a meal -->
+        <TextView
+            android:id="@+id/meal_kind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/section_text_size"
+            android:hint="Choose meal kind."
+            android:onClick="selectMealKind"/>
+
+        <!-- Separator -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_line_height"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="@dimen/margin_between_sections"
+            android:layout_marginBottom="@dimen/margin_between_sections"/>
+
+
+        <!-- Date & Time of the record -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <ImageView
+                android:id="@+id/change_date"
+                android:layout_width="@dimen/date_calendar_icon_size"
+                android:layout_height="@dimen/date_calendar_icon_size"
+                android:src="@drawable/date"
+                android:gravity="center_vertical"
+                android:onClick="changeDate"/>
+            <TextView
+                android:id="@+id/date_placeholder"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_between_elements"
+                android:hint="Date Placeholder"
+                android:gravity="center_vertical"
+                android:onClick="changeDate"/>
+
+            <ImageView
+                android:id="@+id/change_time"
+                android:layout_width="@dimen/date_calendar_icon_size"
+                android:layout_height="@dimen/date_calendar_icon_size"
+                android:src="@drawable/time"
+                android:onClick="changeTime"/>
+            <TextView
+                android:id="@+id/time_placeholder"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_between_elements"
+                android:hint="Time Placeholder"
+                android:gravity="center_vertical"
+                android:onClick="changeTime"/>
+        </LinearLayout>
+
+
+        <!-- Separator -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_line_height"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="@dimen/margin_between_sections"
+            android:layout_marginBottom="@dimen/margin_between_sections"/>
+
+
+        <!-- Food eaten -->
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/empty_margin"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:hint="What have you ate?"
+            />
+
+        <!-- Separator -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_line_height"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="@dimen/margin_between_sections"
+            android:layout_marginBottom="@dimen/margin_between_sections"/>
+
+
+        <!-- Meal reason. -->
+        <TextView
+            android:id="@+id/meal_reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/section_text_size"
+            android:hint="Why?"
+            android:onClick="selectMealReason"/>
+
+
+
+        <!-- Separator -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_line_height"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="@dimen/margin_between_sections"
+            android:layout_marginBottom="@dimen/margin_between_sections"/>
+
+
+        <!-- Level og hunger before. -->
+        <TextView
+            android:id="@+id/hunger_level_before"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/section_text_size"
+            android:hint="What was your hunger level before the meal?"
+            android:onClick="selectHungerLevelBefore"/>
+
+
+        <!-- Separator -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_line_height"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="@dimen/margin_between_sections"
+            android:layout_marginBottom="@dimen/margin_between_sections"/>
+
+
+        <!-- Level of hunger after. -->
+        <TextView
+            android:id="@+id/hunger_level_after"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/section_text_size"
+            android:hint="What was your hunger level after the meal?"
+            android:onClick="selectHungerLevelAfter"/>
+
+
+        <!-- Submit record -->
+        <Button
+            android:id="@+id/add_food_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Food Point"
+            android:onClick="submitFoodRecord"
+            android:layout_marginBottom="@dimen/margin_between_sections"/>
+
+    </LinearLayout>
+</ScrollView>
