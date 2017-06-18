@@ -8,12 +8,20 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.healthtracking.App;
 import com.healthtracking.R;
-import com.healthtracking.data.FakeSportProvider;
+import com.healthtracking.data.Sport;
+import com.healthtracking.data.SportDao;
+
+import org.greenrobot.greendao.query.Query;
 
 public class SportsListActivity extends AppCompatActivity {
 
     ListView sportListView ;
+
+    private SportDao sportDao;
+    private Query<Sport> sportsQuery;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,8 +30,14 @@ public class SportsListActivity extends AppCompatActivity {
 
         sportListView = (ListView) findViewById(R.id.sports_list);
 
+        sportDao = ((App) getApplication()).getDaoSession().getSportDao();
+        sportsQuery = sportDao.queryBuilder()
+                .where(SportDao.Properties.IsVisible.eq(true))
+                .orderDesc(SportDao.Properties.SelectedTimes)
+                .orderAsc(SportDao.Properties.Name)
+                .build();
 
-        final SportArrayAdapter adapter = new SportArrayAdapter(this, FakeSportProvider.getInstance().findAll());
+        final SportArrayAdapter adapter = new SportArrayAdapter(this, sportsQuery.list());
         sportListView.setAdapter(adapter);
         sportListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

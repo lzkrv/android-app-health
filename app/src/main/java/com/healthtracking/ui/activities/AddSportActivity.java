@@ -13,12 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.healthtracking.App;
 import com.healthtracking.R;
-import com.healthtracking.data.FakeSportProvider;
 import com.healthtracking.data.Sport;
+import com.healthtracking.data.SportDao;
 import com.healthtracking.ui.MainActivity;
 import com.healthtracking.ui.common.DatePickerFragment;
 import com.healthtracking.ui.common.TimePickerFragment;
+
+import java.util.List;
 
 import static com.healthtracking.Utils.initDateAndTimeFields;
 
@@ -26,8 +29,10 @@ public class AddSportActivity extends AppCompatActivity {
 
     private boolean sportSelected = false;
 
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+
+    private SportDao sportDao;
 
 
     @Override
@@ -37,6 +42,8 @@ public class AddSportActivity extends AppCompatActivity {
 
         sharedPref = getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+
+        sportDao = ((App) getApplication()).getDaoSession().getSportDao();
 
         updateSelectedSport();
         updateActivityLength();
@@ -86,20 +93,21 @@ public class AddSportActivity extends AppCompatActivity {
     private void updateSelectedSport() {
         int selectedActivityId = getIntent().getIntExtra("SELECTED_ACTIVITY_ID", -1);
         if(selectedActivityId != -1) {
-            Sport sport = FakeSportProvider.getInstance().getSportById(selectedActivityId);
-            if (sport == null) {
+            List<Sport> theSport = sportDao.queryBuilder()
+                    .where(SportDao.Properties.Id.eq(selectedActivityId)).build().list();
+            if (theSport.size() == 0) {
                 Toast.makeText(getApplicationContext(),
                         "Can't find sport with id " + selectedActivityId, Toast.LENGTH_LONG).show();
             } else {
                 ImageView selectSportImg = (ImageView) findViewById(R.id.select_sport_img);
                 TextView selectedSportText = (TextView) findViewById(R.id.select_sport_text);
-                selectSportImg.setImageResource(sport.getImageDrawableId());
+                selectSportImg.setImageResource(theSport.get(0).getImageDrawableId());
                 selectSportImg.setBackgroundColor(
                         ContextCompat.getColor(this, R.color.normalBackgroundColor)
                 );
                 ImageView selectedSportImg = (ImageView) findViewById(R.id.selected_sport_img);
-                selectedSportImg.setImageResource(sport.getImageDrawableId());
-                selectedSportText.setText(sport.getName());
+                selectedSportImg.setImageResource(theSport.get(0).getImageDrawableId());
+                selectedSportText.setText(theSport.get(0).getName());
                 sportSelected = true;
             }
         }

@@ -13,12 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.healthtracking.App;
 import com.healthtracking.R;
-import com.healthtracking.data.FakeHobbyProvider;
 import com.healthtracking.data.Hobby;
+import com.healthtracking.data.HobbyDao;
 import com.healthtracking.ui.MainActivity;
 import com.healthtracking.ui.common.DatePickerFragment;
 import com.healthtracking.ui.common.TimePickerFragment;
+
+import java.util.List;
 
 import static com.healthtracking.Utils.initDateAndTimeFields;
 
@@ -28,6 +31,7 @@ public class AddHobbyActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
 
+    private HobbyDao hobbyDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,8 @@ public class AddHobbyActivity extends AppCompatActivity {
 
         sharedPref = getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+
+        hobbyDao = ((App) getApplication()).getDaoSession().getHobbyDao();
 
         updateSelectedHobby();
         updateActivityLength();
@@ -85,20 +91,21 @@ public class AddHobbyActivity extends AppCompatActivity {
     private void updateSelectedHobby() {
         int selectedActivityId = getIntent().getIntExtra("SELECTED_ACTIVITY_ID", -1);
         if(selectedActivityId != -1) {
-            Hobby hobby = FakeHobbyProvider.getInstance().getHobbyById(selectedActivityId);
-            if (hobby == null) {
+            List<Hobby> hobbies = hobbyDao.queryBuilder()
+                    .where(HobbyDao.Properties.Id.eq(selectedActivityId)).build().list();
+            if (hobbies.size() == 0) {
                 Toast.makeText(getApplicationContext(),
                         "Can't find hobby with id " + selectedActivityId, Toast.LENGTH_LONG).show();
             } else {
                 ImageView selectHobbyImg = (ImageView) findViewById(R.id.select_hobby_img);
                 TextView selectedHobbyText = (TextView) findViewById(R.id.select_hobby_text);
-                selectHobbyImg.setImageResource(hobby.getImageDrawableId());
+                selectHobbyImg.setImageResource(hobbies.get(0).getImageDrawableId());
                 selectHobbyImg.setBackgroundColor(
                         ContextCompat.getColor(this, R.color.normalBackgroundColor)
                 );
                 ImageView selectedHobbyImg = (ImageView) findViewById(R.id.selected_hobby_img);
-                selectedHobbyImg.setImageResource(hobby.getImageDrawableId());
-                selectedHobbyText.setText(hobby.getName());
+                selectedHobbyImg.setImageResource(hobbies.get(0).getImageDrawableId());
+                selectedHobbyText.setText(hobbies.get(0).getName());
                 hobbySelected = true;
             }
         }

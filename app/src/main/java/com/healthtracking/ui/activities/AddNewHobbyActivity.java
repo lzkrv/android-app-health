@@ -7,21 +7,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.healthtracking.App;
 import com.healthtracking.R;
-import com.healthtracking.data.FakeHobbyProvider;
+import com.healthtracking.data.Hobby;
+import com.healthtracking.data.HobbyDao;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.healthtracking.data.Hobby.getHobbyMaxSelectedTimes;
+
 public class AddNewHobbyActivity extends AppCompatActivity {
 
     private LinearLayout imageParent;
     private int selectedHobbyImageId = -1;
+
+    private HobbyDao hobbyDao;
 
     private static List<Integer> images = new ArrayList<>(Arrays.asList(
             R.drawable.hobby,
@@ -43,6 +48,8 @@ public class AddNewHobbyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_hobby_activity);
+
+        hobbyDao = ((App) getApplication()).getDaoSession().getHobbyDao();
 
         imageParent = (LinearLayout) findViewById(R.id.parent_for_all_hobby_images);
         for (final int imageId: images) {
@@ -73,12 +80,26 @@ public class AddNewHobbyActivity extends AppCompatActivity {
             return;
         }
 
-        if (selectedHobbyImageId == -1) {
-            FakeHobbyProvider.getInstance().insertHobby(
-                    newHobbyDescription.getText().toString());
+        String newHobbyName = newHobbyDescription.getText().toString();
+
+        List<Hobby> hobbiesWithName = hobbyDao.queryBuilder()
+                .where(HobbyDao.Properties.Name.eq(newHobbyName))
+                .build().list();
+
+        if (hobbiesWithName.size() == 0) {
+            // create new hobby
+            Hobby newHobby = new Hobby();
+            newHobby.setName(newHobbyName);
+            newHobby.setImageDrawableId(selectedHobbyImageId == -1 ? R.drawable.hobby : selectedHobbyImageId);
+            newHobby.setIsVisible(true);
+            newHobby.setSelectedTimes(getHobbyMaxSelectedTimes(hobbyDao) + 1);
+            hobbyDao.insert(newHobby);
         } else {
-            FakeHobbyProvider.getInstance().insertHobby(
-                    newHobbyDescription.getText().toString(), selectedHobbyImageId);
+            // make existing hobby visible again
+            Hobby oldHobby = hobbiesWithName.get(0);
+            oldHobby.setIsVisible(true);
+            oldHobby.setSelectedTimes(getHobbyMaxSelectedTimes(hobbyDao) + 1);
+            hobbyDao.insertOrReplace(oldHobby);
         }
 
         Intent intent = new Intent(view.getContext(), HobbiesListActivity.class);

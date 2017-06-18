@@ -7,17 +7,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
+import com.healthtracking.App;
 import com.healthtracking.R;
-import com.healthtracking.data.FakeHobbyProvider;
+import com.healthtracking.data.Hobby;
+import com.healthtracking.data.HobbyDao;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import org.greenrobot.greendao.query.Query;
 
 public class HobbiesListActivity extends AppCompatActivity {
 
     ListView hobbyListView ;
+
+    private HobbyDao hobbyDao;
+    private Query<Hobby> hobbyQuery;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,15 @@ public class HobbiesListActivity extends AppCompatActivity {
 
         hobbyListView = (ListView) findViewById(R.id.hobbies_list);
 
+        hobbyDao = ((App) getApplication()).getDaoSession().getHobbyDao();
+        hobbyQuery = hobbyDao.queryBuilder()
+                .where(HobbyDao.Properties.IsVisible.eq(true))
+                .orderDesc(HobbyDao.Properties.SelectedTimes)
+                .orderAsc(HobbyDao.Properties.Name)
+                .build();
 
-        final HobbyArrayAdapter adapter = new HobbyArrayAdapter(this, FakeHobbyProvider.getInstance().findAll());
+
+        final HobbyArrayAdapter adapter = new HobbyArrayAdapter(this, hobbyQuery.list());
         hobbyListView.setAdapter(adapter);
         hobbyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -10,17 +10,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.healthtracking.App;
 import com.healthtracking.R;
-import com.healthtracking.data.FakeSportProvider;
+import com.healthtracking.data.Sport;
+import com.healthtracking.data.SportDao;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.healthtracking.data.Sport.getMaxSelectedTimes;
+
 public class AddNewSportActivity extends AppCompatActivity {
 
     private LinearLayout imageParent;
     private int selectedSportImageId = -1;
+
+    private SportDao sportDao;
 
     private static List<Integer> images = new ArrayList<>(Arrays.asList(
             R.drawable.sport_base,
@@ -40,6 +46,8 @@ public class AddNewSportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_sport_activity);
+
+        sportDao = ((App) getApplication()).getDaoSession().getSportDao();
 
         imageParent = (LinearLayout) findViewById(R.id.parent_for_all_sport_images);
         for (final int imageId: images) {
@@ -69,13 +77,26 @@ public class AddNewSportActivity extends AppCompatActivity {
                     "Please provide name for the sport.", Toast.LENGTH_LONG).show();
             return;
         }
+        String newSportName = newSportDescription.getText().toString();
 
-        if (selectedSportImageId == -1) {
-            FakeSportProvider.getInstance().insertSport(
-                    newSportDescription.getText().toString());
+        List<Sport> sportsWithName = sportDao.queryBuilder()
+                .where(SportDao.Properties.Name.eq(newSportName))
+                .build().list();
+
+        if (sportsWithName.size() == 0) {
+            // create new sport
+            Sport newSport = new Sport();
+            newSport.setName(newSportName);
+            newSport.setImageDrawableId(selectedSportImageId == -1 ? R.drawable.sport_base : selectedSportImageId);
+            newSport.setIsVisible(true);
+            newSport.setSelectedTimes(getMaxSelectedTimes(sportDao) + 1);
+            sportDao.insert(newSport);
         } else {
-            FakeSportProvider.getInstance().insertSport(
-                    newSportDescription.getText().toString(), selectedSportImageId);
+            // make existing sport visible again
+            Sport oldSport = sportsWithName.get(0);
+            oldSport.setIsVisible(true);
+            oldSport.setSelectedTimes(getMaxSelectedTimes(sportDao) + 1);
+            sportDao.insertOrReplace(oldSport);
         }
 
         Intent intent = new Intent(view.getContext(), SportsListActivity.class);

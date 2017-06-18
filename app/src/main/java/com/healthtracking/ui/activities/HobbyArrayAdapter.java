@@ -12,24 +12,29 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.healthtracking.App;
 import com.healthtracking.R;
-import com.healthtracking.data.FakeHobbyProvider;
 import com.healthtracking.data.Hobby;
+import com.healthtracking.data.HobbyDao;
+
 
 import java.util.List;
 
 public class HobbyArrayAdapter extends ArrayAdapter<Hobby> {
     private final Context context;
     private final List<Hobby> values;
+    private HobbyDao hobbyDao;
 
     public HobbyArrayAdapter(Context context, List<Hobby> values) {
         super(context, R.layout.activity_hobby_list, values);
         this.context = context;
         this.values = values;
+
+        hobbyDao = ((App)((Activity)context).getApplication()).getDaoSession().getHobbyDao();
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -60,7 +65,7 @@ public class HobbyArrayAdapter extends ArrayAdapter<Hobby> {
         deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteActivity(view);
+                deleteActivity(view, position);
             }
         });
 
@@ -70,21 +75,30 @@ public class HobbyArrayAdapter extends ArrayAdapter<Hobby> {
     public void chooseActivity(View view) {
         RelativeLayout parent = (RelativeLayout) view.getParent();
         int activityId = Integer.parseInt((String)((TextView) parent.getChildAt(3)).getText());
-        String activityName = (String) ((TextView) parent.getChildAt(1)).getText();
+
+        Hobby hobby = hobbyDao.queryBuilder()
+                .where(HobbyDao.Properties.Id.eq(activityId)).build().list().get(0);
+
+        hobby.setSelectedTimes(hobby.getSelectedTimes() + 1);
+        hobbyDao.insertOrReplace(hobby);
 
         Intent intent = new Intent(view.getContext(), AddHobbyActivity.class);
         Bundle b = new Bundle();
         b.putInt("SELECTED_ACTIVITY_ID", activityId);
-        b.putString("SELECTED_ACTIVITY_NAME", activityName);
+        b.putString("SELECTED_ACTIVITY_NAME", hobby.getName());
         intent.putExtras(b);
         getContext().startActivity(intent);
         ((Activity)context).finish();
     }
 
-    private void deleteActivity(View view) {
+    private void deleteActivity(View view, int position) {
         RelativeLayout parent = (RelativeLayout) view.getParent();
         int activityId = Integer.parseInt((String)((TextView) parent.getChildAt(3)).getText());
-        FakeHobbyProvider.getInstance().deleteHobby(activityId);
+        Hobby hobby = hobbyDao.queryBuilder()
+                .where(HobbyDao.Properties.Id.eq(activityId)).build().list().get(0);
+        hobby.setIsVisible(false);
+        hobbyDao.insertOrReplace(hobby);
+        values.remove(position);
         this.notifyDataSetChanged();
     }
 }
