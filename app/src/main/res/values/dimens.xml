@@ -15,7 +15,9 @@
     <dimen name="image_in_text_size">18dp</dimen>
     <dimen name="image_in_list_size">32dp</dimen>
     <dimen name="health_level_icon_size">64dp</dimen>
+    <dimen name="mood_level_icon_size">64dp</dimen>
     <dimen name="hobby_icon_size">64dp</dimen>
+    <dimen name="sport_icon_size">64dp</dimen>
     <dimen name="date_calendar_icon_size">32dp</dimen>
 
     <dimen name="margin_between_sections">30dp</dimen>

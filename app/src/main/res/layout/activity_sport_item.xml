@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/standard_padding"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/sport_item_logo"
+        android:layout_alignParentLeft="true"
+        android:gravity="center_vertical"
+        android:layout_width="@dimen/image_in_list_size"
+        android:layout_height="@dimen/image_in_list_size">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/sport_item_name"
+        android:layout_toRightOf="@id/sport_item_logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/margin_between_elements"
+        android:gravity="center_vertical"
+        android:text="@+id/label" >
+    </TextView>
+
+    <ImageView
+        android:id="@+id/sport_item_delete"
+        android:layout_alignParentRight="true"
+        android:layout_width="@dimen/image_in_list_size"
+        android:layout_height="@dimen/image_in_list_size"
+        android:gravity="center_vertical"
+        android:src="@drawable/delete">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/sport_item_id"
+        android:layout_width="@dimen/empty_margin"
+        android:layout_height="@dimen/empty_margin">
+    </TextView>
+
+</RelativeLayout>
