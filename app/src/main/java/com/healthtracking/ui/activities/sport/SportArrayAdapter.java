@@ -1,4 +1,4 @@
-package com.healthtracking.ui.activities;
+package com.healthtracking.ui.activities.sport;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,23 +13,22 @@ import android.widget.TextView;
 
 import com.healthtracking.App;
 import com.healthtracking.R;
-import com.healthtracking.data.Hobby;
-import com.healthtracking.data.HobbyDao;
-
+import com.healthtracking.data.Sport;
+import com.healthtracking.data.SportDao;
 
 import java.util.List;
 
-public class HobbyArrayAdapter extends ArrayAdapter<Hobby> {
+public class SportArrayAdapter extends ArrayAdapter<Sport> {
     private final Context context;
-    private final List<Hobby> values;
-    private HobbyDao hobbyDao;
+    private final List<Sport> values;
+    private SportDao sportDao;
 
-    public HobbyArrayAdapter(Context context, List<Hobby> values) {
-        super(context, R.layout.activity_hobby_list, values);
+    public SportArrayAdapter(Context context, List<Sport> values) {
+        super(context, R.layout.activity_sport_list, values);
         this.context = context;
         this.values = values;
 
-        hobbyDao = ((App)((Activity)context).getApplication()).getDaoSession().getHobbyDao();
+        sportDao = ((App)((Activity)context).getApplication()).getDaoSession().getSportDao();
     }
 
     @Override
@@ -37,17 +36,17 @@ public class HobbyArrayAdapter extends ArrayAdapter<Hobby> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View rowView = inflater.inflate(R.layout.activity_hobby_item, parent, false);
-        Hobby hobby = values.get(position);
+        View rowView = inflater.inflate(R.layout.activity_sport_item, parent, false);
+        Sport sport = values.get(position);
 
-        TextView textView = (TextView) rowView.findViewById(R.id.hobby_item_name);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.hobby_item_logo);
-        ImageView deleteIcon = (ImageView) rowView.findViewById(R.id.hobby_item_delete);
-        TextView idView = (TextView) rowView.findViewById(R.id.hobby_item_id);
+        TextView textView = (TextView) rowView.findViewById(R.id.sport_item_name);
+        ImageView imageView = (ImageView) rowView.findViewById(R.id.sport_item_logo);
+        ImageView deleteIcon = (ImageView) rowView.findViewById(R.id.sport_item_delete);
+        TextView idView = (TextView) rowView.findViewById(R.id.sport_item_id);
 
-        textView.setText(hobby.getName());
-        idView.setText(hobby.getId().toString());
-        imageView.setImageResource(hobby.getImageDrawableId());
+        textView.setText(sport.getName());
+        idView.setText(sport.getId().toString());
+        imageView.setImageResource(sport.getImageDrawableId());
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,24 +71,24 @@ public class HobbyArrayAdapter extends ArrayAdapter<Hobby> {
     }
 
     public void chooseActivity(int position) {
-        Hobby hobby = values.get(position);
+        Sport sport = values.get(position);
 
-        hobby.setSelectedTimes(hobby.getSelectedTimes() + 1);
-        hobbyDao.insertOrReplace(hobby);
+        sport.setSelectedTimes(sport.getSelectedTimes() + 1);
+        sportDao.insertOrReplace(sport);
 
-        Intent intent = new Intent(context, AddHobbyActivity.class);
+        Intent intent = new Intent(context, AddSportActivity.class);
         Bundle b = new Bundle();
-        b.putLong("SELECTED_ACTIVITY_ID", hobby.getId());
-        b.putString("SELECTED_ACTIVITY_NAME", hobby.getName());
+        b.putLong("SELECTED_ACTIVITY_ID", sport.getId());
+        b.putString("SELECTED_ACTIVITY_NAME", sport.getName());
         intent.putExtras(b);
         context.startActivity(intent);
         ((Activity)context).finish();
     }
 
     private void deleteActivity(int position) {
-        Hobby hobby = values.get(position);
-        hobby.setIsVisible(false);
-        hobbyDao.insertOrReplace(hobby);
+        Sport sport = values.get(position);
+        sport.setIsVisible(false);
+        sportDao.insertOrReplace(sport);
         values.remove(position);
         this.notifyDataSetChanged();
     }

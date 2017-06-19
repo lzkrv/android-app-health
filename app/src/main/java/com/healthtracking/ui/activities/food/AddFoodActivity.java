@@ -1,4 +1,4 @@
-package com.healthtracking.ui.activities;
+package com.healthtracking.ui.activities.food;
 
 import android.content.Context;
 import android.content.DialogInterface;

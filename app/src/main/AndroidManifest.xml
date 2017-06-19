@@ -20,31 +20,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.AddFoodActivity"
+            android:name=".ui.activities.food.AddFoodActivity"
             android:label="Add Food" />
         <activity
-            android:name=".ui.activities.AddHealthActivity"
+            android:name=".ui.activities.health.AddHealthActivity"
             android:label="Add Health Point" />
         <activity
-            android:name=".ui.activities.AddHobbyActivity"
+            android:name=".ui.activities.hobby.AddHobbyActivity"
             android:label="Add Hobby Activity" />
         <activity
-            android:name=".ui.activities.AddMoodActivity"
+            android:name=".ui.activities.mood.AddMoodActivity"
             android:label="Add Mood Point" />
         <activity
-            android:name=".ui.activities.AddSportActivity"
+            android:name=".ui.activities.sport.AddSportActivity"
             android:label="Add Sport Activity" />
         <activity
-            android:name=".ui.activities.AddNewSportActivity"
+            android:name=".ui.activities.sport.AddNewSportActivity"
             android:label="Add New Sport" />
         <activity
-            android:name=".ui.activities.SportsListActivity"
+            android:name=".ui.activities.sport.SportsListActivity"
             android:label="My Sports" />
         <activity
-            android:name=".ui.activities.HobbiesListActivity"
+            android:name=".ui.activities.hobby.HobbiesListActivity"
             android:label="My Hobbies" />
         <activity
-            android:name=".ui.activities.AddNewHobbyActivity"
+            android:name=".ui.activities.hobby.AddNewHobbyActivity"
             android:label="Add New Hobby" />
     </application>
 

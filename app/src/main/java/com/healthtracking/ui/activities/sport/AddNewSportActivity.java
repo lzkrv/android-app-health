@@ -1,4 +1,4 @@
-package com.healthtracking.ui.activities;
+package com.healthtracking.ui.activities.sport;
 
 import android.content.Intent;
 import android.os.Bundle;

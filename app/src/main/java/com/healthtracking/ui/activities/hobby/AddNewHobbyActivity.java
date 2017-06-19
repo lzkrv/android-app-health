@@ -1,4 +1,4 @@
-package com.healthtracking.ui.activities;
+package com.healthtracking.ui.activities.hobby;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;

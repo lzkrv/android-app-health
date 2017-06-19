@@ -1,10 +1,10 @@
 package com.healthtracking.data;
 
-import com.healthtracking.ui.activities.AddFoodActivity;
-import com.healthtracking.ui.activities.AddHealthActivity;
-import com.healthtracking.ui.activities.AddHobbyActivity;
-import com.healthtracking.ui.activities.AddMoodActivity;
-import com.healthtracking.ui.activities.AddSportActivity;
+import com.healthtracking.ui.activities.food.AddFoodActivity;
+import com.healthtracking.ui.activities.health.AddHealthActivity;
+import com.healthtracking.ui.activities.hobby.AddHobbyActivity;
+import com.healthtracking.ui.activities.mood.AddMoodActivity;
+import com.healthtracking.ui.activities.sport.AddSportActivity;
 import com.healthtracking.R;
 
 /**

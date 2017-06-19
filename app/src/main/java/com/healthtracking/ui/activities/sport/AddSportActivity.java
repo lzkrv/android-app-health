@@ -1,4 +1,4 @@
-package com.healthtracking.ui.activities;
+package com.healthtracking.ui.activities.sport;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import com.healthtracking.App;
 import com.healthtracking.R;
-import com.healthtracking.data.Hobby;
-import com.healthtracking.data.HobbyDao;
+import com.healthtracking.data.Sport;
+import com.healthtracking.data.SportDao;
 import com.healthtracking.ui.MainActivity;
 import com.healthtracking.ui.common.DatePickerFragment;
 import com.healthtracking.ui.common.TimePickerFragment;
@@ -25,44 +25,46 @@ import java.util.List;
 
 import static com.healthtracking.Utils.initDateAndTimeFields;
 
-public class AddHobbyActivity extends AppCompatActivity {
-    private boolean hobbySelected = false;
+public class AddSportActivity extends AppCompatActivity {
 
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
+    private boolean sportSelected = false;
 
-    private HobbyDao hobbyDao;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+
+    private SportDao sportDao;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_hobby);
+        setContentView(R.layout.activity_add_sport);
 
         sharedPref = getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
-        hobbyDao = ((App) getApplication()).getDaoSession().getHobbyDao();
+        sportDao = ((App) getApplication()).getDaoSession().getSportDao();
 
-        updateSelectedHobby();
+        updateSelectedSport();
         updateActivityLength();
         initDateAndTimeFields(this);
     }
 
-    public void selectHobbyFromList(View view) {
+    public void selectSportFromList(View view) {
         EditText activityLengthField = (EditText) findViewById(R.id.activity_time_minutes);
         String activityLengthText = activityLengthField.getText().toString();
-        editor.putString(getString(R.string.hobby_length), activityLengthText);
+        editor.putString(getString(R.string.sport_length), activityLengthText);
         editor.commit();
 
-        Intent intent = new Intent(view.getContext(), HobbiesListActivity.class);
+        Intent intent = new Intent(view.getContext(), SportsListActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void submitHobbyActivity(View view) {
-        if (!hobbySelected) {
-            ImageView selectedHobbyImg = (ImageView) findViewById(R.id.select_hobby_img);
-            selectedHobbyImg.setBackgroundColor(
+    public void submitSportActivity(View view) {
+        if (!sportSelected) {
+            ImageView selectedSportImg = (ImageView) findViewById(R.id.select_sport_img);
+            selectedSportImg.setBackgroundColor(
                     ContextCompat.getColor(this, R.color.alertBackgroundColor)
             );
             Toast.makeText(getApplicationContext(),
@@ -70,8 +72,8 @@ public class AddHobbyActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(view.getContext(), MainActivity.class);
             startActivity(intent);
-            editor.remove(getString(R.string.hobby_time));
-            editor.remove(getString(R.string.hobby_length));
+            editor.remove(getString(R.string.sport_time));
+            editor.remove(getString(R.string.sport_length));
             editor.remove(getString(R.string.current_time));
             editor.commit();
             finish();
@@ -88,31 +90,31 @@ public class AddHobbyActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
-    private void updateSelectedHobby() {
+    private void updateSelectedSport() {
         long selectedActivityId = getIntent().getLongExtra("SELECTED_ACTIVITY_ID", -1);
         if(selectedActivityId != -1) {
-            List<Hobby> hobbies = hobbyDao.queryBuilder()
-                    .where(HobbyDao.Properties.Id.eq(selectedActivityId)).build().list();
-            if (hobbies.size() == 0) {
+            List<Sport> theSport = sportDao.queryBuilder()
+                    .where(SportDao.Properties.Id.eq(selectedActivityId)).build().list();
+            if (theSport.size() == 0) {
                 Toast.makeText(getApplicationContext(),
-                        "Can't find hobby with id " + selectedActivityId, Toast.LENGTH_LONG).show();
+                        "Can't find sport with id " + selectedActivityId, Toast.LENGTH_LONG).show();
             } else {
-                ImageView selectHobbyImg = (ImageView) findViewById(R.id.select_hobby_img);
-                TextView selectedHobbyText = (TextView) findViewById(R.id.select_hobby_text);
-                selectHobbyImg.setImageResource(hobbies.get(0).getImageDrawableId());
-                selectHobbyImg.setBackgroundColor(
+                ImageView selectSportImg = (ImageView) findViewById(R.id.select_sport_img);
+                TextView selectedSportText = (TextView) findViewById(R.id.select_sport_text);
+                selectSportImg.setImageResource(theSport.get(0).getImageDrawableId());
+                selectSportImg.setBackgroundColor(
                         ContextCompat.getColor(this, R.color.normalBackgroundColor)
                 );
-                ImageView selectedHobbyImg = (ImageView) findViewById(R.id.selected_hobby_img);
-                selectedHobbyImg.setImageResource(hobbies.get(0).getImageDrawableId());
-                selectedHobbyText.setText(hobbies.get(0).getName());
-                hobbySelected = true;
+                ImageView selectedSportImg = (ImageView) findViewById(R.id.selected_sport_img);
+                selectedSportImg.setImageResource(theSport.get(0).getImageDrawableId());
+                selectedSportText.setText(theSport.get(0).getName());
+                sportSelected = true;
             }
         }
     }
 
     private void updateActivityLength() {
-        String activityLength = sharedPref.getString(getString(R.string.hobby_length), null);
+        String activityLength = sharedPref.getString(getString(R.string.sport_length), null);
         if (activityLength != null) {
             EditText activityLengthField = (EditText) findViewById(R.id.activity_time_minutes);
             activityLengthField.setText(activityLength);
