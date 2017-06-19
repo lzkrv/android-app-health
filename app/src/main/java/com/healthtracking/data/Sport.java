@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 @Entity
 public class Sport {
-    @Id
+    @Id(autoincrement = true)
     private Long id;
 
     @NotNull
