@@ -41,6 +41,6 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 6
+    schemaVersion 7
     targetGenDir 'build/generated/source/greendao'
 }
