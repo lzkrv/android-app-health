@@ -2,22 +2,17 @@ package com.healthtracking.ui.activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.healthtracking.App;
 import com.healthtracking.R;
 import com.healthtracking.data.HealthLevel;
-import com.healthtracking.data.Hobby;
-import com.healthtracking.data.HobbyDao;
 import com.healthtracking.data.Log;
 import com.healthtracking.data.LogDao;
 import com.healthtracking.data.LogFood;
@@ -26,8 +21,6 @@ import com.healthtracking.data.LogHobby;
 import com.healthtracking.data.LogMood;
 import com.healthtracking.data.LogSport;
 import com.healthtracking.data.MoodLevel;
-import com.healthtracking.data.Sport;
-import com.healthtracking.data.SportDao;
 
 import java.util.List;
 
