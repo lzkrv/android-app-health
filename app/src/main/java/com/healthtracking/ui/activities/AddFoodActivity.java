@@ -58,7 +58,7 @@ public class AddFoodActivity extends AppCompatActivity {
                 view,
                 new CharSequence[] {"Breakfast", "Lunch", "Dinner", "Perekus"},
                 R.id.meal_kind,
-                chosenMealType
+                "chosenMealType"
         );
     }
 
@@ -67,7 +67,7 @@ public class AddFoodActivity extends AppCompatActivity {
                 view,
                 new CharSequence[] {"Hunger", "Emotional - Event", "Emotional - Sadness", "Emotional - Guilt"},
                 R.id.meal_reason,
-                chosenMealReason
+                "chosenMealReason"
         );
     }
 
@@ -76,7 +76,7 @@ public class AddFoodActivity extends AppCompatActivity {
                 view,
                 new CharSequence[] {"Starving", "Hungry", "Nor hungry nor full", "Full", "Bloated"},
                 R.id.hunger_level_before,
-                chosenHungerLevelBefore
+                "chosenHungerLevelBefore"
         );
     }
 
@@ -85,18 +85,35 @@ public class AddFoodActivity extends AppCompatActivity {
                 view,
                 new CharSequence[] {"Starving", "Hungry", "Nor hungry nor full", "Full", "Bloated"},
                 R.id.hunger_level_after,
-                chosenHungerLevelAfter
+                "chosenHungerLevelAfter"
         );
     }
 
     private void showAlertDialog(final View view, final CharSequence[] items,
-                                 final int elementId, final int varToPopulate) {
+                                 final int elementId, final String varToPopulate) {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         adb.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface d, int n) {
                 TextView textView = (TextView) view.findViewById(elementId);
                 textView.setText(items[n]);
+
+                //save n to a variable
+                switch (varToPopulate) {
+                    case "chosenMealType":
+                        chosenMealType = n;
+                        break;
+                    case "chosenMealReason":
+                        chosenMealReason = n;
+                        break;
+                    case "chosenHungerLevelBefore":
+                        chosenHungerLevelBefore = n;
+                        break;
+                    case "chosenHungerLevelAfter":
+                        chosenHungerLevelAfter = n;
+                        break;
+                }
+
                 alertDialog.dismiss();
             }
         });

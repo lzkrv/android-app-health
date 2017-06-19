@@ -47,7 +47,7 @@ public class HobbyArrayAdapter extends ArrayAdapter<Hobby> {
         TextView idView = (TextView) rowView.findViewById(R.id.hobby_item_id);
 
         textView.setText(hobby.getName());
-        idView.setText("" + hobby.getId());
+        idView.setText(hobby.getId().toString());
         imageView.setImageResource(hobby.getImageDrawableId());
 
         imageView.setOnClickListener(new View.OnClickListener() {

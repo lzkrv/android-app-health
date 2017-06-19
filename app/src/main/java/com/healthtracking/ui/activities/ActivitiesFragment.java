@@ -1,5 +1,6 @@
 package com.healthtracking.ui.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -17,56 +18,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
+import com.healthtracking.App;
 import com.healthtracking.R;
 import com.healthtracking.data.ActionType;
+import com.healthtracking.data.HobbyDao;
+import com.healthtracking.data.Log;
+import com.healthtracking.data.LogDao;
+
+import org.greenrobot.greendao.query.Query;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ActivitiesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ActivitiesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ActivitiesFragment extends Fragment {
-    //???
+
     private OnFragmentInteractionListener mListener;
 
     private Boolean isFabOpen = false;
     private FloatingActionButton fabAdd,fabFood,fabSport, fabHealth, fabMood, fabHobby;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
+    private ListView logListView;
+
+    private LogDao logDao;
+
     public ActivitiesFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ActivitiesFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static ActivitiesFragment newInstance(String param1, String param2) {
         ActivitiesFragment fragment = new ActivitiesFragment();
-        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
 
 
     }
@@ -102,6 +93,19 @@ public class ActivitiesFragment extends Fragment {
         fab_close = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.rotate_backward);
+
+
+
+        logListView = (ListView) view.findViewById(R.id.log_list);
+
+        logDao = ((App)getActivity().getApplication()).getDaoSession().getLogDao();
+
+        Query<Log> logQuery = logDao.queryBuilder()
+                .orderDesc(LogDao.Properties.Timestamp)
+                .build();
+
+        final LogArrayAdapter adapter = new LogArrayAdapter(getContext(), logQuery.list());
+        logListView.setAdapter(adapter);
 
         return view;
     }
