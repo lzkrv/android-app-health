@@ -79,6 +79,7 @@
 
         <!-- Food eaten -->
         <EditText
+            android:id="@+id/food_eaten"
             android:layout_width="match_parent"
             android:layout_height="@dimen/empty_margin"
             android:layout_weight="1"

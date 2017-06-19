@@ -9,9 +9,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.healthtracking.App;
 import com.healthtracking.R;
+import com.healthtracking.data.Log;
+import com.healthtracking.data.LogDao;
+import com.healthtracking.data.LogFood;
+import com.healthtracking.data.LogFoodDao;
 import com.healthtracking.ui.MainActivity;
 import com.healthtracking.ui.common.DatePickerFragment;
 import com.healthtracking.ui.common.TimePickerFragment;
@@ -30,6 +36,9 @@ public class AddFoodActivity extends AppCompatActivity {
     private int chosenHungerLevelBefore = -1;
     private int chosenHungerLevelAfter = -1;
 
+    LogDao logDao;
+    LogFoodDao logFoodDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +46,9 @@ public class AddFoodActivity extends AppCompatActivity {
 
         sharedPref = getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+
+        logDao = ((App) getApplication()).getDaoSession().getLogDao();
+        logFoodDao = ((App) getApplication()).getDaoSession().getLogFoodDao();
 
         initDateAndTimeFields(this);
     }
@@ -103,8 +115,24 @@ public class AddFoodActivity extends AppCompatActivity {
     }
 
     public void submitFoodRecord(View view) {
+        EditText foodEaten = (EditText) findViewById(R.id.food_eaten);
+
+        LogFood logFood = new LogFood();
+        logFood.setFoodEaten(foodEaten.getText().toString());
+        logFood.setMealKind(chosenMealType);
+        logFood.setMealReason(chosenMealReason);
+        logFood.setHungerLevelBefore(chosenHungerLevelBefore);
+        logFood.setHungerLevelAfter(chosenHungerLevelAfter);
+        logFoodDao.insert(logFood);
+
+        Log log = new Log();
+        log.setLogFood(logFood);
+        log.setTimestamp(sharedPref.getLong(this.getString(R.string.current_time), 0));
+        logDao.insert(log);
+
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         startActivity(intent);
+
         finish();
     }
 }
