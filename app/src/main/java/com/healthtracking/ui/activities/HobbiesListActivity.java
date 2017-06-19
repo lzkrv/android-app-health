@@ -43,7 +43,7 @@ public class HobbiesListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                adapter.chooseActivity(((RelativeLayout)view).getChildAt(0));
+                adapter.chooseActivity(position);
             }
         });
     }

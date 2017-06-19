@@ -91,7 +91,7 @@ public class AddSportActivity extends AppCompatActivity {
     }
 
     private void updateSelectedSport() {
-        int selectedActivityId = getIntent().getIntExtra("SELECTED_ACTIVITY_ID", -1);
+        long selectedActivityId = getIntent().getLongExtra("SELECTED_ACTIVITY_ID", -1);
         if(selectedActivityId != -1) {
             List<Sport> theSport = sportDao.queryBuilder()
                     .where(SportDao.Properties.Id.eq(selectedActivityId)).build().list();

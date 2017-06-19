@@ -89,7 +89,7 @@ public class AddHobbyActivity extends AppCompatActivity {
     }
 
     private void updateSelectedHobby() {
-        int selectedActivityId = getIntent().getIntExtra("SELECTED_ACTIVITY_ID", -1);
+        long selectedActivityId = getIntent().getLongExtra("SELECTED_ACTIVITY_ID", -1);
         if(selectedActivityId != -1) {
             List<Hobby> hobbies = hobbyDao.queryBuilder()
                     .where(HobbyDao.Properties.Id.eq(selectedActivityId)).build().list();

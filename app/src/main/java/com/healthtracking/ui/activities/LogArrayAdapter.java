@@ -26,6 +26,8 @@ import com.healthtracking.data.LogHobby;
 import com.healthtracking.data.LogMood;
 import com.healthtracking.data.LogSport;
 import com.healthtracking.data.MoodLevel;
+import com.healthtracking.data.Sport;
+import com.healthtracking.data.SportDao;
 
 import java.util.List;
 
@@ -33,10 +35,14 @@ public class LogArrayAdapter extends ArrayAdapter<Log> {
     private final Context context;
     private final List<Log> values;
 
+    private LogDao logDao;
+
     public LogArrayAdapter(Context context, List<Log> values) {
         super(context, R.layout.log_item, values);
         this.context = context;
         this.values = values;
+
+        logDao = ((App)((Activity)context).getApplication()).getDaoSession().getLogDao();
     }
 
     @Override
@@ -75,6 +81,20 @@ public class LogArrayAdapter extends ArrayAdapter<Log> {
             textView.setText(logSport.getSportType().getName());
         }
 
+        deleteIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteActivity(view, position);
+            }
+        });
+
         return rowView;
+    }
+
+    private void deleteActivity(View view, int position) {
+        Log log = values.get(position);
+        logDao.delete(log);
+        values.remove(position);
+        this.notifyDataSetChanged();
     }
 }

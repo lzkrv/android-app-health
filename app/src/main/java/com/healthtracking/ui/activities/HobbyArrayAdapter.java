@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.healthtracking.App;
@@ -53,49 +52,42 @@ public class HobbyArrayAdapter extends ArrayAdapter<Hobby> {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseActivity(view);
+                chooseActivity(position);
             }
         });
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseActivity(view);
+                chooseActivity(position);
             }
         });
         deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteActivity(view, position);
+                deleteActivity(position);
             }
         });
 
         return rowView;
     }
 
-    public void chooseActivity(View view) {
-        RelativeLayout parent = (RelativeLayout) view.getParent();
-        int activityId = Integer.parseInt((String)((TextView) parent.getChildAt(3)).getText());
-
-        Hobby hobby = hobbyDao.queryBuilder()
-                .where(HobbyDao.Properties.Id.eq(activityId)).build().list().get(0);
+    public void chooseActivity(int position) {
+        Hobby hobby = values.get(position);
 
         hobby.setSelectedTimes(hobby.getSelectedTimes() + 1);
         hobbyDao.insertOrReplace(hobby);
 
-        Intent intent = new Intent(view.getContext(), AddHobbyActivity.class);
+        Intent intent = new Intent(context, AddHobbyActivity.class);
         Bundle b = new Bundle();
-        b.putInt("SELECTED_ACTIVITY_ID", activityId);
+        b.putLong("SELECTED_ACTIVITY_ID", hobby.getId());
         b.putString("SELECTED_ACTIVITY_NAME", hobby.getName());
         intent.putExtras(b);
-        getContext().startActivity(intent);
+        context.startActivity(intent);
         ((Activity)context).finish();
     }
 
-    private void deleteActivity(View view, int position) {
-        RelativeLayout parent = (RelativeLayout) view.getParent();
-        int activityId = Integer.parseInt((String)((TextView) parent.getChildAt(3)).getText());
-        Hobby hobby = hobbyDao.queryBuilder()
-                .where(HobbyDao.Properties.Id.eq(activityId)).build().list().get(0);
+    private void deleteActivity(int position) {
+        Hobby hobby = values.get(position);
         hobby.setIsVisible(false);
         hobbyDao.insertOrReplace(hobby);
         values.remove(position);

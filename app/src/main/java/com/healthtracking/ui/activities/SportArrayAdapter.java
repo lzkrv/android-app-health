@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.healthtracking.App;
@@ -52,49 +51,42 @@ public class SportArrayAdapter extends ArrayAdapter<Sport> {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseActivity(view);
+                chooseActivity(position);
             }
         });
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseActivity(view);
+                chooseActivity(position);
             }
         });
         deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteActivity(view, position);
+                deleteActivity(position);
             }
         });
 
         return rowView;
     }
 
-    public void chooseActivity(View view) {
-        RelativeLayout parent = (RelativeLayout) view.getParent();
-        int activityId = Integer.parseInt((String)((TextView) parent.getChildAt(3)).getText());
-
-        Sport sport = sportDao.queryBuilder()
-                .where(SportDao.Properties.Id.eq(activityId)).build().list().get(0);
+    public void chooseActivity(int position) {
+        Sport sport = values.get(position);
 
         sport.setSelectedTimes(sport.getSelectedTimes() + 1);
         sportDao.insertOrReplace(sport);
 
-        Intent intent = new Intent(view.getContext(), AddSportActivity.class);
+        Intent intent = new Intent(context, AddSportActivity.class);
         Bundle b = new Bundle();
-        b.putInt("SELECTED_ACTIVITY_ID", activityId);
+        b.putLong("SELECTED_ACTIVITY_ID", sport.getId());
         b.putString("SELECTED_ACTIVITY_NAME", sport.getName());
         intent.putExtras(b);
-        getContext().startActivity(intent);
+        context.startActivity(intent);
         ((Activity)context).finish();
     }
 
-    private void deleteActivity(View view, int position) {
-        RelativeLayout parent = (RelativeLayout) view.getParent();
-        int activityId = Integer.parseInt((String)((TextView) parent.getChildAt(3)).getText());
-        Sport sport = sportDao.queryBuilder()
-                .where(SportDao.Properties.Id.eq(activityId)).build().list().get(0);
+    private void deleteActivity(int position) {
+        Sport sport = values.get(position);
         sport.setIsVisible(false);
         sportDao.insertOrReplace(sport);
         values.remove(position);
